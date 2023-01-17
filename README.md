@@ -2,11 +2,15 @@
 
 TODO:
 
+- NONE
+
 KNOWN ISSUES:
 
 [ ] ECS Task role error on service first create. (ECS Service will launch moments later when IAM role is available)
 
 [ ] Target group in use issue when changing parameters. (Re run tf apply)
+
+[ ] After applying target tracking scaling a deployment is required to enable it. (This must be triggered manually or by a push to ecr.)
 
 | Memory value (MiB)                                                                                   | CPU value      | Operating systems supported for Fargate |
 |------------------------------------------------------------------------------------------------------|----------------|-----------------------------------------|

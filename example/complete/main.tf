@@ -121,6 +121,26 @@ module "service_complete" {
     }
   }
 
+  task_definition_memory_cpu_configuration = {
+    memory = 2048
+    cpu    = 1024
+  }
+
+  side_car_resource_allocation_configuration = {
+    reverse_proxy = {
+      cpu    = 0.125  # Values given as decimal % of total CPU
+      memory = 0.0625 # Values given as decimal % of total memory
+    }
+    firelens = {
+      cpu    = 0.125
+      memory = 0.0625
+    }
+    new_relic_infra_agent = {
+      cpu    = 0.125
+      memory = 0.125
+    }
+  }
+
   tags = {
     Name = "example"
   }
