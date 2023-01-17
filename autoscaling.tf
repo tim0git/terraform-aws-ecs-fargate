@@ -24,8 +24,8 @@ module "request_count_target_tracking_autoscaling" {
   application_name         = var.application_name
   ecs_cluster_name         = var.cluster_name
   ecs_service_name         = var.enable_pipeline ? aws_ecs_service.pipeline_enabled[0].name : aws_ecs_service.pipeline_disabled[0].name
-  code_pipeline_sns_arn    = aws_sns_topic.this[0].arn
-  code_deploy_iam_role_arn = aws_iam_role.code_deploy[0].arn
+  code_pipeline_sns_arn    = try(aws_sns_topic.this[0].arn, null)
+  code_deploy_iam_role_arn = try(aws_iam_role.code_deploy[0].arn, "")
   load_balancer_name       = var.load_balancer_name
 
   scale_target_min_capacity   = var.desired_count
