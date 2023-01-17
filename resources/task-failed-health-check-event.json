@@ -1,0 +1,8 @@
+{
+  "detail": {
+    "clusterArn": ["${cluster_arn}"],
+    "stoppedReason": [{
+      "prefix": "Task failed container health checks"
+    }]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "detail-type": ["AWS API Call via CloudTrail"],
+  "detail": {
+    "eventSource": ["elasticloadbalancing.amazonaws.com"],
+    "eventName": ["ModifyRule"],
+    "userAgent": ["codedeploy.amazonaws.com"],
+    "userIdentity": {
+      "sessionContext": {
+        "sessionIssuer": {
+          "arn": ["${codedeploy_iam_role_arn}"]
+        }
+      }
+    }
+  }
+}
