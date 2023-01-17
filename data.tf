@@ -28,10 +28,12 @@ data "aws_subnets" "private" {
 }
 
 data "aws_lb" "this" {
+  count = local.enable_load_balancing ? 1 : 0
   name = var.load_balancer_name
 }
 
 data "aws_lb_listener" "this" {
-  load_balancer_arn = data.aws_lb.this.arn
+  count = local.enable_load_balancing ? 1 : 0
+  load_balancer_arn = data.aws_lb.this[0].arn
   port              = var.load_balancer_listener_port
 }
