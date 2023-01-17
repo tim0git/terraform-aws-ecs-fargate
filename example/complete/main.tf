@@ -121,6 +121,8 @@ module "service_complete" {
     }
   }
 
+  log_group_retention_in_days = 30
+
   task_definition_memory_cpu_configuration = {
     memory = 2048
     cpu    = 1024
