@@ -139,7 +139,7 @@ locals {
       }
     ],
     cpu               = local.new_relic_infrastructure_agent_cpu_allocation,
-    memoryReservation = local.new_relic_infrastructure_agent_memory_allocation,
+    memory            = local.new_relic_infrastructure_agent_memory_allocation,
     mountPoints       = [],
     portMappings      = [],
     volumesFrom       = [],
