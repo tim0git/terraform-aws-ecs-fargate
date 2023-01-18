@@ -12,6 +12,8 @@ KNOWN ISSUES:
 
 [ ] After applying target tracking scaling a deployment is required to enable it. (This must be triggered manually or by a push to ecr.)
 
+Fargate CPU and Memory Configuration Table
+
 | Memory value (MiB)                                                                                   | CPU value      | Operating systems supported for Fargate |
 |------------------------------------------------------------------------------------------------------|----------------|-----------------------------------------|
 | 512 (0.5 GB), 1024 (1 GB), 2048 (2 GB)                                                               | 256 (.25 vCPU) | Linux                                   |
