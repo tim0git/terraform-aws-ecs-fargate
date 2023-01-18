@@ -4,7 +4,7 @@ locals {
   })
 
   ecr_event = templatefile("${path.module}/resources/ecr-source-event.json", {
-    ecr_repository_name = var.application_name
+    ecr_repository_name = local.ecr_repository_name
   })
 
   task_failed_health_check = templatefile("${path.module}/resources/task-failed-health-check-event.json", {
