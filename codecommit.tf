@@ -16,7 +16,7 @@ resource "null_resource" "code-commit-files" {
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
 
-export "AWS_PROFILE=${var.aws_profile}"
+export "AWS_PROFILE=${var.custom_aws_profile}"
 
 aws ecs describe-task-definition --task-definition "${aws_ecs_task_definition.this.arn}"  --output json --query taskDefinition > "taskdef.json"
 

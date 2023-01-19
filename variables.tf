@@ -184,7 +184,7 @@ variable "volume" {
     }
   }
 }
-variable "aws_profile" {
+variable "custom_aws_profile" {
   type        = string
   description = "AWS profile to use for task definition push to code commit"
   default     = "default"
