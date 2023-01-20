@@ -108,10 +108,9 @@ resource "aws_iam_policy" "task" {
     ]
   })
 }
-resource "aws_iam_policy_attachment" "task_custom" {
+resource "aws_iam_role_policy_attachment" "task_custom" {
   count      = length(var.ecs_task_custom_policy_arns)
-  name       = lower("${var.application_name}-ecs-task-custom-policy-attachment-${count.index}")
-  roles      = [aws_iam_role.task.name]
+  role       = aws_iam_role.task.name
   policy_arn = var.ecs_task_custom_policy_arns[count.index]
 }
 
@@ -133,10 +132,9 @@ resource "aws_iam_role" "code_deploy" {
     ]
   })
 }
-resource "aws_iam_policy_attachment" "code_deploy" {
+resource "aws_iam_role_policy_attachment" "code_deploy" {
   count      = var.enable_pipeline ? 1 : 0
-  name       = lower("${var.application_name}-code-deploy-policy-attachment")
-  roles      = [aws_iam_role.code_deploy[0].name]
+  role       = aws_iam_role.code_deploy[0].name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
 }
 
@@ -158,10 +156,9 @@ resource "aws_iam_role" "code_pipeline" {
     ]
   })
 }
-resource "aws_iam_policy_attachment" "code_pipeline" {
+resource "aws_iam_role_policy_attachment" "code_pipeline" {
   count      = var.enable_pipeline ? 1 : 0
-  name       = lower("${var.application_name}-code-pipeline-policy-attachment")
-  roles      = [aws_iam_role.code_pipeline[0].name]
+  role       = aws_iam_role.code_pipeline[0].name
   policy_arn = aws_iam_policy.code_pipeline[0].arn
 }
 resource "aws_iam_policy" "code_pipeline" {
