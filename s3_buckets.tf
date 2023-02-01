@@ -33,6 +33,15 @@ module "pipeline_artifacts_bucket" {
     mfa_delete = false
   }
 
+  server_side_encryption_configuration = {
+    bucket_key_enabled = true
+    rule = {
+      apply_server_side_encryption_by_default = {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
   logging = local.logging
 
   lifecycle_rule = local.s3_lifecycle_templates.standard_ia_30_glacier_60_delete_365

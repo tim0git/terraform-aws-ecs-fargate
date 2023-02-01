@@ -264,6 +264,11 @@ variable "side_car_resource_allocation_configuration" {
     }
   }
 }
+variable "readonly_root_file_system" {
+  type = bool
+  default = true
+  description = "Whether to enable readonly root file system for the task definition"
+}
 variable "tags" {
   type        = map(string)
   description = "Default tags to apply to all resources"

@@ -29,7 +29,7 @@ Fargate CPU and Memory Configuration Table
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.6 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
 
 ## Providers
@@ -76,17 +76,17 @@ Fargate CPU and Memory Configuration Table
 | [aws_iam_policy.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
-| [aws_iam_policy_attachment.code_deploy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
-| [aws_iam_policy_attachment.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
-| [aws_iam_policy_attachment.task_custom](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_role.code_deploy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.code_deploy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_iam_role_policy_attachment.task_custom](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_lb_listener_rule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
 | [aws_lb_target_group.blue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_lb_target_group.green](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
@@ -125,6 +125,7 @@ Fargate CPU and Memory Configuration Table
 | <a name="input_load_balancer_name"></a> [load\_balancer\_name](#input\_load\_balancer\_name) | Name of the load balancer to attach to | `string` | `null` | no |
 | <a name="input_log_group_retention_in_days"></a> [log\_group\_retention\_in\_days](#input\_log\_group\_retention\_in\_days) | Log group retention in days | `number` | `30` | no |
 | <a name="input_new_relic_firelens_image_uri"></a> [new\_relic\_firelens\_image\_uri](#input\_new\_relic\_firelens\_image\_uri) | Image URI for the firelens container | `object({ ap-northeast-1 = string, ap-northeast-2 = string, ap-northeast-3 = string, ap-south-1 = string, ap-southeast-1 = string, ap-southeast-2 = string, ca-central-1 = string, eu-central-1 = string, eu-north-1 = string, eu-west-1 = string, eu-west-2 = string, eu-west-3 = string, sa-east-1 = string, us-east-1 = string, us-east-2 = string, us-west-1 = string, us-west-2 = string })` | <pre>{<br>  "ap-northeast-1": "533243300146.dkr.ecr.ap-northeast-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "ap-northeast-2": "533243300146.dkr.ecr.ap-northeast-2.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "ap-northeast-3": "533243300146.dkr.ecr.ap-northeast-3.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "ap-south-1": "533243300146.dkr.ecr.ap-south-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "ap-southeast-1": "533243300146.dkr.ecr.ap-southeast-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "ap-southeast-2": "533243300146.dkr.ecr.ap-southeast-2.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "ca-central-1": "533243300146.dkr.ecr.ca-central-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "eu-central-1": "533243300146.dkr.ecr.eu-central-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "eu-north-1": "533243300146.dkr.ecr.eu-north-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "eu-west-1": "533243300146.dkr.ecr.eu-west-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "eu-west-2": "533243300146.dkr.ecr.eu-west-2.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "eu-west-3": "533243300146.dkr.ecr.eu-west-3.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "sa-east-1": "533243300146.dkr.ecr.sa-east-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "us-east-1": "533243300146.dkr.ecr.us-east-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "us-east-2": "533243300146.dkr.ecr.us-east-2.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "us-west-1": "533243300146.dkr.ecr.us-west-1.amazonaws.com/newrelic/logging-firelens-fluentbit",<br>  "us-west-2": "533243300146.dkr.ecr.us-west-2.amazonaws.com/newrelic/logging-firelens-fluentbit"<br>}</pre> | no |
+| <a name="input_readonly_root_file_system"></a> [readonly\_root\_file\_system](#input\_readonly\_root\_file\_system) | Whether to enable readonly root file system for the task definition | `bool` | `true` | no |
 | <a name="input_reverse_proxy_configuration"></a> [reverse\_proxy\_configuration](#input\_reverse\_proxy\_configuration) | Reverse proxy configuration | <pre>object({<br>    image_uri     = string,<br>    listener_port = number,<br>    proxy_port    = number,<br>  })</pre> | <pre>{<br>  "image_uri": null,<br>  "listener_port": 8443,<br>  "proxy_port": 3000<br>}</pre> | no |
 | <a name="input_runtime_platform"></a> [runtime\_platform](#input\_runtime\_platform) | Runtime platform for the task, default linux x86\_64 | `object({ cpu_architecture = string, operating_system_family = string })` | <pre>{<br>  "cpu_architecture": "X86_64",<br>  "operating_system_family": "LINUX"<br>}</pre> | no |
 | <a name="input_s3_access_logs_bucket_name"></a> [s3\_access\_logs\_bucket\_name](#input\_s3\_access\_logs\_bucket\_name) | S3 bucket to store access logs | `string` | `null` | no |

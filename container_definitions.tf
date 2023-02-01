@@ -85,6 +85,7 @@ locals {
       }
     },
     environment  = [],
+    readonlyRootFilesystem = var.readonly_root_file_system
     mountPoints  = [],
     portMappings = [],
     volumesFrom  = [],
@@ -111,6 +112,7 @@ locals {
     environment  = var.container_definition.environment
     secrets      = try(var.container_definition.secrets, null)
     volumesFrom  = try(var.container_definition.volumesFrom, [])
+    readonlyRootFilesystem = try(var.container_definition.readonlyRootFilesystem, var.readonly_root_file_system)
     mountPoints  = try(var.container_definition.mountPoints, [])
     healthCheck  = try(var.container_definition.healthCheck, local.default_application_health_check)
     user         = try(var.container_definition.user, null)
