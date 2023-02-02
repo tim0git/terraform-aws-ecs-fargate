@@ -12,7 +12,22 @@ KNOWN ISSUES:
 
 [ ] After applying target tracking scaling a deployment is required to enable it. (This must be triggered manually or by a push to ecr.)
 
-Fargate CPU and Memory Configuration Table
+#### ECS Service
+![ecs-service.svg](./resources/diagrams/ecs-service.svg)
+
+#### ECS Service with New Relic Instrumentation
+![fargate high level infra diagram](./resources/diagrams/ecs-service-new-relic-instrumentation.svg)
+
+#### ECS Service Load Balanced
+![ecs-service.svg](./resources/diagrams/ecs-service-loadbalanced.svg)
+
+#### ECS Service Load Balanced with New Relic Instrumentation
+![ecs-service.svg](./resources/diagrams/ecs-service-load-balanced-new-relic-instrumentation.svg)
+
+#### ECS MFE Deployment with New Relic Instrumentation
+![fargate high level infra diagram](./resources/diagrams/ecs-mfe-service.svg)
+
+#### Fargate CPU and Memory Configuration Table
 
 | Memory value (MiB)                                                                                   | CPU value      | Operating systems supported for Fargate |
 |------------------------------------------------------------------------------------------------------|----------------|-----------------------------------------|
