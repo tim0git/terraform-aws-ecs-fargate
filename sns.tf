@@ -1,6 +1,8 @@
 resource "aws_sns_topic" "this" {
   count = var.enable_pipeline ? 1 : 0
   name  = "${var.application_name}-deploy-pipeline"
+
+  tags = var.tags
 }
 
 data "aws_iam_policy_document" "this" {
