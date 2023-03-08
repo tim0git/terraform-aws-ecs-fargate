@@ -218,6 +218,7 @@ KNOWN ISSUES:
 | <a name="output_aws_lb_target_group_green_arn"></a> [aws\_lb\_target\_group\_green\_arn](#output\_aws\_lb\_target\_group\_green\_arn) | The ARN of the green target group |
 | <a name="output_aws_lb_target_group_green_id"></a> [aws\_lb\_target\_group\_green\_id](#output\_aws\_lb\_target\_group\_green\_id) | The ID of the green target group |
 | <a name="output_aws_lb_target_group_green_name"></a> [aws\_lb\_target\_group\_green\_name](#output\_aws\_lb\_target\_group\_green\_name) | The name of the green target group |
+| <a name="output_aws_lb_zone_id"></a> [aws\_lb\_zone\_id](#output\_aws\_lb\_zone\_id) | The Zone ID of the application load balancer |
 | <a name="output_aws_metric_alarm_cpu_high_arn"></a> [aws\_metric\_alarm\_cpu\_high\_arn](#output\_aws\_metric\_alarm\_cpu\_high\_arn) | ARN of the CPU high metric alarm |
 | <a name="output_aws_metric_alarm_cpu_low_arn"></a> [aws\_metric\_alarm\_cpu\_low\_arn](#output\_aws\_metric\_alarm\_cpu\_low\_arn) | ARN of the CPU low metric alarm |
 | <a name="output_aws_s3_bucket_artifacts_arn"></a> [aws\_s3\_bucket\_artifacts\_arn](#output\_aws\_s3\_bucket\_artifacts\_arn) | The ARN of the S3 bucket for artifacts |

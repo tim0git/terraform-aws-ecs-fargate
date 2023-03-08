@@ -85,6 +85,10 @@ output "aws_lb_dns_name" {
   value       = local.enable_load_balancing ? data.aws_lb.this[0].dns_name : ""
   description = "The DNS name of the application load balancer"
 }
+output "aws_lb_zone_id" {
+  value       = local.enable_load_balancing ? data.aws_lb.this[0].zone_id  : ""
+  description = "The Zone ID of the application load balancer"
+}
 output "aws_lb_target_group_blue_arn" {
   value       = local.enable_load_balancing ? aws_lb_target_group.blue[0].arn : ""
   description = "The ARN of the blue target group"
