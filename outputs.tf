@@ -81,6 +81,10 @@ output "aws_scale_target_id" {
 }
 
 #ALB
+output "aws_lb_dns_name" {
+  value       = local.enable_load_balancing ? data.aws_lb.this[0].dns_name : ""
+  description = "The DNS name of the application load balancer"
+}
 output "aws_lb_target_group_blue_arn" {
   value       = local.enable_load_balancing ? aws_lb_target_group.blue[0].arn : ""
   description = "The ARN of the blue target group"
@@ -117,6 +121,7 @@ output "aws_lb_listener_rule_listener_priority" {
   value       = local.enable_load_balancing ? aws_lb_listener_rule.this[0].priority : ""
   description = "The priority of the listener rule"
 }
+
 
 #Pipeline
 output "aws_code_commit_repository_id" {
