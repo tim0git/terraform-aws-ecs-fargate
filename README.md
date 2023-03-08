@@ -208,6 +208,7 @@ KNOWN ISSUES:
 | <a name="output_aws_iam_execution_role_name"></a> [aws\_iam\_execution\_role\_name](#output\_aws\_iam\_execution\_role\_name) | The name of the ECS Service execution role |
 | <a name="output_aws_iam_task_role_arn"></a> [aws\_iam\_task\_role\_arn](#output\_aws\_iam\_task\_role\_arn) | The ARN of the ECS Service task role |
 | <a name="output_aws_iam_task_role_name"></a> [aws\_iam\_task\_role\_name](#output\_aws\_iam\_task\_role\_name) | The name of the ECS Service task role |
+| <a name="output_aws_lb_dns_name"></a> [aws\_lb\_dns\_name](#output\_aws\_lb\_dns\_name) | The DNS name of the application load balancer |
 | <a name="output_aws_lb_listener_rule_listener_arn"></a> [aws\_lb\_listener\_rule\_listener\_arn](#output\_aws\_lb\_listener\_rule\_listener\_arn) | The ARN of the listener rule |
 | <a name="output_aws_lb_listener_rule_listener_id"></a> [aws\_lb\_listener\_rule\_listener\_id](#output\_aws\_lb\_listener\_rule\_listener\_id) | The ID of the listener rule |
 | <a name="output_aws_lb_listener_rule_listener_priority"></a> [aws\_lb\_listener\_rule\_listener\_priority](#output\_aws\_lb\_listener\_rule\_listener\_priority) | The priority of the listener rule |
