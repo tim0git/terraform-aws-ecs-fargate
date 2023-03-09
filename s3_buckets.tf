@@ -1,5 +1,5 @@
 locals {
-  s3_lifecycle_templates = yamldecode(file("s3_lifecycle_templates.yml"))
+  s3_lifecycle_templates = yamldecode(file("${path.module}/s3_lifecycle_templates.yml"))
 
   logging_configuration = {
     target_bucket = var.s3_access_logs_bucket_name
