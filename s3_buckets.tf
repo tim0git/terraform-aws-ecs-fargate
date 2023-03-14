@@ -12,7 +12,7 @@ locals {
 module "pipeline_artifacts_bucket" {
   create_bucket = var.enable_pipeline
   source        = "terraform-aws-modules/s3-bucket/aws"
-  version       = "3.6.0"
+  version       = "3.8.2"
   force_destroy = true
 
   bucket = "${data.aws_caller_identity.current.account_id}-${var.application_name}-deploy-pipeline"
