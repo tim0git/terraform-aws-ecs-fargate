@@ -261,13 +261,35 @@ variable "side_car_resource_allocation_configuration" {
     new_relic_infra_agent = {
       cpu    = 0.125
       memory = 0.125
+    },
+    app_config_agent = {
+      cpu    = 0.125
+      memory = 0.0625
     }
   }
 }
 variable "readonly_root_file_system" {
-  type = bool
-  default = true
+  type        = bool
+  default     = true
   description = "Whether to enable readonly root file system for the task definition"
+}
+variable "enable_app_config" {
+  type        = bool
+  description = "Enable app config side car see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html"
+  default     = false
+}
+variable "app_config_image_uri" {
+  type        = string
+  description = "Image URI for the app config container see https://gallery.ecr.aws/aws-appconfig/aws-appconfig-agent"
+  default     = "public.ecr.aws/aws-appconfig/aws-appconfig-agent:2.x"
+}
+variable "app_config_environmental_variables" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  description = "Environmental variables for the app config container see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html"
+  default     = []
 }
 variable "tags" {
   type        = map(string)

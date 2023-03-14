@@ -40,7 +40,7 @@ resource "aws_codedeploy_deployment_group" "this" {
   load_balancer_info {
     target_group_pair_info {
       prod_traffic_route {
-        listener_arns = [ data.aws_lb_listener.this[0].arn]
+        listener_arns = [data.aws_lb_listener.this[0].arn]
       }
 
       target_group {

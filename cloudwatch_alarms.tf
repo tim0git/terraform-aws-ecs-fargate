@@ -10,7 +10,7 @@ resource "aws_cloudwatch_metric_alarm" "target-group-green-5xx" {
   threshold           = 3
 
   dimensions = {
-    LoadBalancer =  data.aws_lb.this[0].id
+    LoadBalancer = data.aws_lb.this[0].id
     TargetGroup  = aws_lb_target_group.green[0].id
   }
 
@@ -31,7 +31,7 @@ resource "aws_cloudwatch_metric_alarm" "target-group-blue-5xx" {
   threshold           = 3
 
   dimensions = {
-    LoadBalancer =  data.aws_lb.this[0].id
+    LoadBalancer = data.aws_lb.this[0].id
     TargetGroup  = aws_lb_target_group.blue[0].id
   }
 
@@ -52,7 +52,7 @@ resource "aws_cloudwatch_metric_alarm" "target-group-green-4xx" {
   threshold           = 3
 
   dimensions = {
-    LoadBalancer =  data.aws_lb.this[0].id
+    LoadBalancer = data.aws_lb.this[0].id
     TargetGroup  = aws_lb_target_group.green[0].id
   }
 
@@ -73,7 +73,7 @@ resource "aws_cloudwatch_metric_alarm" "target-group-blue-4xx" {
   threshold           = 3
 
   dimensions = {
-    LoadBalancer =  data.aws_lb.this[0].id
+    LoadBalancer = data.aws_lb.this[0].id
     TargetGroup  = aws_lb_target_group.blue[0].id
   }
 

@@ -80,7 +80,7 @@ resource "aws_iam_role" "task" {
         Principal = {
           Service = "ecs-tasks.amazonaws.com"
         }
-      },
+      }
     ]
   })
 }
@@ -278,7 +278,7 @@ resource "aws_iam_policy_attachment" "event_bridge" {
 resource "aws_iam_policy" "event_bridge" {
   count       = var.enable_pipeline ? 1 : 0
   name        = lower("${var.application_name}-event-bridge-policy")
-  description = "Policy for ${var.application_name} Code Pipeline role"
+  description = "Policy for ${var.application_name} Event Bridge role"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -295,6 +295,52 @@ resource "aws_iam_policy" "event_bridge" {
         ],
         Effect   = "Allow",
         Resource = "*",
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role" "app_config_agent" {
+  count = var.enable_app_config ? 1 : 0
+  name  = lower("${var.application_name}-app-config-agent-role")
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = "AllowAppConfigAgentAssumeRole"
+        Principal = {
+          "AWS": [ data.aws_caller_identity.current.account_id ]
+        }
+      }
+    ]
+  })
+}
+resource "aws_iam_policy_attachment" "app_config_agent" {
+  count      = var.enable_app_config ? 1 : 0
+  name       = lower("${var.application_name}-app-config-agent-policy-attachment")
+  roles      = [aws_iam_role.app_config_agent[0].name]
+  policy_arn = aws_iam_policy.app_config_agent[0].arn
+}
+resource "aws_iam_policy" "app_config_agent" {
+  count       = var.enable_app_config ? 1 : 0
+  name        = lower("${var.application_name}-app-config-agent-policy")
+  description = "Policy for ${var.application_name} App Config Agent Role"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "appconfig:StartConfigurationSession",
+          "appconfig:GetLatestConfiguration",
+        ]
+        Effect   = "Allow"
+        Resource = [
+          "arn:aws:appconfig:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:application/*/configurationprofile/*",
+          "arn:aws:appconfig:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:application/*/environment/*/configuration/*"
+        ]
       }
     ]
   })

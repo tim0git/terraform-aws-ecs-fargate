@@ -87,13 +87,16 @@ KNOWN ISSUES:
 | [aws_ecs_service.pipeline_disabled](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
 | [aws_ecs_service.pipeline_enabled](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_service) | resource |
 | [aws_ecs_task_definition.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_task_definition) | resource |
+| [aws_iam_policy.app_config_agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy_attachment.app_config_agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
+| [aws_iam_role.app_config_agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.code_deploy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
@@ -123,6 +126,8 @@ KNOWN ISSUES:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_app_config_environmental_variables"></a> [app\_config\_environmental\_variables](#input\_app\_config\_environmental\_variables) | Environmental variables for the app config container see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_app_config_image_uri"></a> [app\_config\_image\_uri](#input\_app\_config\_image\_uri) | Image URI for the app config container see https://gallery.ecr.aws/aws-appconfig/aws-appconfig-agent | `string` | `"public.ecr.aws/aws-appconfig/aws-appconfig-agent:2.x"` | no |
 | <a name="input_application_name"></a> [application\_name](#input\_application\_name) | Name of the application | `string` | n/a | yes |
 | <a name="input_autoscaling_configuration"></a> [autoscaling\_configuration](#input\_autoscaling\_configuration) | Autoscaling parameters for both target tracking and cpu step scaling policies | `any` | <pre>{<br>  "autoscale_target_value": 150,<br>  "enable_target_tracking": false,<br>  "max_cpu_evaluation_period": 3,<br>  "max_cpu_period": 60,<br>  "max_cpu_threshold": 65,<br>  "min_cpu_evaluation_period": 3,<br>  "min_cpu_period": 60,<br>  "min_cpu_threshold": 15,<br>  "scale_target_max_capacity": 5<br>}</pre> | no |
 | <a name="input_aws_firelens_image_uri"></a> [aws\_firelens\_image\_uri](#input\_aws\_firelens\_image\_uri) | Image URI for the firelens container | `string` | `"public.ecr.aws/aws-observability/aws-for-fluent-bit:stable"` | no |
@@ -133,6 +138,7 @@ KNOWN ISSUES:
 | <a name="input_deploy_config_name"></a> [deploy\_config\_name](#input\_deploy\_config\_name) | The name of the deployment configuration. Options are: CodeDeployDefault.ECSLinear10PercentEvery1Minutes, CodeDeployDefault.ECSLinear10PercentEvery3Minutes, CodeDeployDefault.ECSAllAtOnce, CodeDeployDefault.ECSCanary10Percent5Minutes, CodeDeployDefault.ECSCanary10Percent15Minutes | `string` | `"CodeDeployDefault.ECSAllAtOnce"` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | Number of tasks to run | `number` | `1` | no |
 | <a name="input_ecs_task_custom_policy_arns"></a> [ecs\_task\_custom\_policy\_arns](#input\_ecs\_task\_custom\_policy\_arns) | Custom policy to attach to the task role | `list(string)` | `[]` | no |
+| <a name="input_enable_app_config"></a> [enable\_app\_config](#input\_enable\_app\_config) | Enable app config side car see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html | `bool` | `false` | no |
 | <a name="input_enable_autoscaling"></a> [enable\_autoscaling](#input\_enable\_autoscaling) | Enable autoscaling | `bool` | `false` | no |
 | <a name="input_enable_pipeline"></a> [enable\_pipeline](#input\_enable\_pipeline) | Enable code pipeline | `bool` | `false` | no |
 | <a name="input_listener_rule_conditions"></a> [listener\_rule\_conditions](#input\_listener\_rule\_conditions) | List of conditions to use for the listener rule | `object({ host_header = list(string), path_pattern = list(string) })` | <pre>{<br>  "host_header": [],<br>  "path_pattern": [<br>    "/*"<br>  ]<br>}</pre> | no |
@@ -145,7 +151,7 @@ KNOWN ISSUES:
 | <a name="input_runtime_platform"></a> [runtime\_platform](#input\_runtime\_platform) | Runtime platform for the task, default linux x86\_64 | `object({ cpu_architecture = string, operating_system_family = string })` | <pre>{<br>  "cpu_architecture": "X86_64",<br>  "operating_system_family": "LINUX"<br>}</pre> | no |
 | <a name="input_s3_access_logs_bucket_name"></a> [s3\_access\_logs\_bucket\_name](#input\_s3\_access\_logs\_bucket\_name) | S3 bucket to store access logs | `string` | `null` | no |
 | <a name="input_security_groups_names"></a> [security\_groups\_names](#input\_security\_groups\_names) | Tags to use to lookup security groups | `list(string)` | n/a | yes |
-| <a name="input_side_car_resource_allocation_configuration"></a> [side\_car\_resource\_allocation\_configuration](#input\_side\_car\_resource\_allocation\_configuration) | Side car resource allocation configuration (Values given in decimal %) | `any` | <pre>{<br>  "firelens": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  },<br>  "new_relic_infra_agent": {<br>    "cpu": 0.125,<br>    "memory": 0.125<br>  },<br>  "reverse_proxy": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  }<br>}</pre> | no |
+| <a name="input_side_car_resource_allocation_configuration"></a> [side\_car\_resource\_allocation\_configuration](#input\_side\_car\_resource\_allocation\_configuration) | Side car resource allocation configuration (Values given in decimal %) | `any` | <pre>{<br>  "app_config_agent": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  },<br>  "firelens": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  },<br>  "new_relic_infra_agent": {<br>    "cpu": 0.125,<br>    "memory": 0.125<br>  },<br>  "reverse_proxy": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  }<br>}</pre> | no |
 | <a name="input_sns_topic_subscription_email"></a> [sns\_topic\_subscription\_email](#input\_sns\_topic\_subscription\_email) | Email to subscribe to the pipeline notifications | `string` | `null` | no |
 | <a name="input_subnet_names"></a> [subnet\_names](#input\_subnet\_names) | Tags to use to lookup subnets | `list(string)` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Default tags to apply to all resources | `map(string)` | n/a | yes |

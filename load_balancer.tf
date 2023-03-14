@@ -66,7 +66,7 @@ resource "aws_lb_target_group" "green" {
 
 resource "aws_lb_listener_rule" "this" {
   count        = local.enable_load_balancing || local.create_pipeline_load_balancer_resources ? 1 : 0
-  listener_arn =  data.aws_lb_listener.this[0].arn
+  listener_arn = data.aws_lb_listener.this[0].arn
 
   action {
     type             = "forward"
