@@ -143,6 +143,16 @@ module "service_complete" {
     }
   }
 
+  enable_app_config = true
+  app_config_image_uri = "12345678910.dkr.ecr.us-east-1.amazonaws.com/example-app-config-image:latest"
+  app_config_environmental_variables = [
+    {
+      name  = "APP_CONFIG_ENVIRONMENTAL_VARIABLE"
+      value = "example"
+    }
+  ]
+
+
   tags = {
     Name = "example"
   }
