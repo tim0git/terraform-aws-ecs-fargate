@@ -312,7 +312,7 @@ resource "aws_iam_role" "app_config_agent" {
         Effect = "Allow"
         Sid    = "AllowAppConfigAgentAssumeRole"
         Principal = {
-          "AWS": [ data.aws_caller_identity.current.account_id ]
+          "AWS" : [data.aws_caller_identity.current.account_id]
         }
       }
     ]
@@ -336,7 +336,7 @@ resource "aws_iam_policy" "app_config_agent" {
           "appconfig:StartConfigurationSession",
           "appconfig:GetLatestConfiguration",
         ]
-        Effect   = "Allow"
+        Effect = "Allow"
         Resource = [
           "arn:aws:appconfig:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:application/*/configurationprofile/*",
           "arn:aws:appconfig:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:application/*/environment/*/configuration/*"
