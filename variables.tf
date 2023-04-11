@@ -89,7 +89,7 @@ variable "target_group_stickiness" {
   type        = any
   description = "Stickiness settings for the target group"
   default = {
-    enabled         = true
+    enabled         = false
     type            = "lb_cookie"
     cookie_duration = 3600
   }
