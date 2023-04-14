@@ -273,6 +273,11 @@ variable "readonly_root_file_system" {
   default     = true
   description = "Whether to enable readonly root file system for the task definition"
 }
+variable "termination_wait_time_in_minutes" {
+  type        = number
+  default     = 5
+  description = "The time to wait (in minutes) before force killing a container"
+}
 variable "enable_app_config" {
   type        = bool
   description = "Enable app config side car see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html"
