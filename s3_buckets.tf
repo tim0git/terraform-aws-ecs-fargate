@@ -16,7 +16,7 @@ module "pipeline_artifacts_bucket" {
   force_destroy = true
 
   bucket = "${data.aws_caller_identity.current.account_id}-${var.application_name}-deploy-pipeline"
-  acl    = "private"
+  object_ownership    = "BucketOwnerEnforced"
 
   # S3 bucket-level Public Access Block configuration
   block_public_acls       = true
