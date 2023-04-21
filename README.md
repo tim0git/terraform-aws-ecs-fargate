@@ -62,7 +62,7 @@ KNOWN ISSUES:
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_cpu_autoscaling"></a> [cpu\_autoscaling](#module\_cpu\_autoscaling) | ./modules/autoscaling/cpu_step | n/a |
-| <a name="module_pipeline_artifacts_bucket"></a> [pipeline\_artifacts\_bucket](#module\_pipeline\_artifacts\_bucket) | terraform-aws-modules/s3-bucket/aws | 3.6.0 |
+| <a name="module_pipeline_artifacts_bucket"></a> [pipeline\_artifacts\_bucket](#module\_pipeline\_artifacts\_bucket) | terraform-aws-modules/s3-bucket/aws | 3.8.2 |
 | <a name="module_request_count_target_tracking_autoscaling"></a> [request\_count\_target\_tracking\_autoscaling](#module\_request\_count\_target\_tracking\_autoscaling) | ./modules/autoscaling/request_count_target_tracking | n/a |
 
 ## Resources
@@ -93,16 +93,19 @@ KNOWN ISSUES:
 | [aws_iam_policy.app_config_agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_policy.event_bridge_scheduler](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy_attachment.app_config_agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
+| [aws_iam_policy_attachment.event_bridge_scheduler](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_policy_attachment.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy_attachment) | resource |
 | [aws_iam_role.app_config_agent](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.code_deploy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.code_pipeline](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.event_bridge](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role.event_bridge_scheduler](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.execution](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role.task](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_iam_role_policy_attachment.code_deploy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
@@ -111,6 +114,9 @@ KNOWN ISSUES:
 | [aws_lb_listener_rule.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener_rule) | resource |
 | [aws_lb_target_group.blue](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 | [aws_lb_target_group.green](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
+| [aws_scheduler_schedule.ecs_service_start](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/scheduler_schedule) | resource |
+| [aws_scheduler_schedule.ecs_service_stop](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/scheduler_schedule) | resource |
+| [aws_scheduler_schedule_group.ecs_service](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/scheduler_schedule_group) | resource |
 | [aws_sns_topic.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic) | resource |
 | [aws_sns_topic_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_policy) | resource |
 | [aws_sns_topic_subscription.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) | resource |
@@ -144,6 +150,7 @@ KNOWN ISSUES:
 | <a name="input_enable_app_config"></a> [enable\_app\_config](#input\_enable\_app\_config) | Enable app config side car see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html | `bool` | `false` | no |
 | <a name="input_enable_autoscaling"></a> [enable\_autoscaling](#input\_enable\_autoscaling) | Enable autoscaling | `bool` | `false` | no |
 | <a name="input_enable_pipeline"></a> [enable\_pipeline](#input\_enable\_pipeline) | Enable code pipeline | `bool` | `false` | no |
+| <a name="input_enable_service_schedule"></a> [enable\_service\_schedule](#input\_enable\_service\_schedule) | Enable ECS Service Schedule, this will start and stop the ecs service on a cron expression see service\_schedule\_configuration input variable | `bool` | `false` | no |
 | <a name="input_listener_rule_conditions"></a> [listener\_rule\_conditions](#input\_listener\_rule\_conditions) | List of conditions to use for the listener rule | `object({ host_header = list(string), path_pattern = list(string) })` | <pre>{<br>  "host_header": [],<br>  "path_pattern": [<br>    "/*"<br>  ]<br>}</pre> | no |
 | <a name="input_load_balancer_listener_port"></a> [load\_balancer\_listener\_port](#input\_load\_balancer\_listener\_port) | Port to attach the load balancer to | `number` | `443` | no |
 | <a name="input_load_balancer_name"></a> [load\_balancer\_name](#input\_load\_balancer\_name) | Name of the load balancer to attach to | `string` | `null` | no |
@@ -154,6 +161,7 @@ KNOWN ISSUES:
 | <a name="input_runtime_platform"></a> [runtime\_platform](#input\_runtime\_platform) | Runtime platform for the task, default linux x86\_64 | `object({ cpu_architecture = string, operating_system_family = string })` | <pre>{<br>  "cpu_architecture": "X86_64",<br>  "operating_system_family": "LINUX"<br>}</pre> | no |
 | <a name="input_s3_access_logs_bucket_name"></a> [s3\_access\_logs\_bucket\_name](#input\_s3\_access\_logs\_bucket\_name) | S3 bucket to store access logs | `string` | `null` | no |
 | <a name="input_security_groups_names"></a> [security\_groups\_names](#input\_security\_groups\_names) | Tags to use to lookup security groups | `list(string)` | n/a | yes |
+| <a name="input_service_schedule_configuration"></a> [service\_schedule\_configuration](#input\_service\_schedule\_configuration) | The start and stop cron expressions that control the service schedule, applicable only if enable\_service\_schedule is true. See https://docs.aws.amazon.com/scheduler/latest/UserGuide/schedule-types.html | <pre>object({<br>    start_cron : string,<br>    stop_cron: string,<br>    timezone: string<br>  })</pre> | <pre>{<br>  "start_cron": "cron(0 7 ? * 2-6 *)",<br>  "stop_cron": "cron(0 19 ? * 2-6 *)",<br>  "timezone": "Europe/London"<br>}</pre> | no |
 | <a name="input_side_car_resource_allocation_configuration"></a> [side\_car\_resource\_allocation\_configuration](#input\_side\_car\_resource\_allocation\_configuration) | Side car resource allocation configuration (Values given in decimal %) | `any` | <pre>{<br>  "app_config_agent": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  },<br>  "firelens": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  },<br>  "new_relic_infra_agent": {<br>    "cpu": 0.125,<br>    "memory": 0.125<br>  },<br>  "reverse_proxy": {<br>    "cpu": 0.125,<br>    "memory": 0.0625<br>  }<br>}</pre> | no |
 | <a name="input_sns_topic_subscription_email"></a> [sns\_topic\_subscription\_email](#input\_sns\_topic\_subscription\_email) | Email to subscribe to the pipeline notifications | `string` | `null` | no |
 | <a name="input_subnet_names"></a> [subnet\_names](#input\_subnet\_names) | Tags to use to lookup subnets | `list(string)` | n/a | yes |
@@ -161,8 +169,9 @@ KNOWN ISSUES:
 | <a name="input_target_group_deregistration_delay"></a> [target\_group\_deregistration\_delay](#input\_target\_group\_deregistration\_delay) | Deregistration delay for the target group | `number` | `120` | no |
 | <a name="input_target_group_health_check"></a> [target\_group\_health\_check](#input\_target\_group\_health\_check) | Health check settings for the target group | `any` | <pre>{<br>  "healthy_threshold_count": 2,<br>  "interval_seconds": 30,<br>  "path": "/",<br>  "port": "traffic-port",<br>  "protocol": "HTTP",<br>  "timeout_seconds": 5,<br>  "unhealthy_threshold_count": 2<br>}</pre> | no |
 | <a name="input_target_group_protocol"></a> [target\_group\_protocol](#input\_target\_group\_protocol) | Protocol to use for the target group | `string` | `"HTTP"` | no |
-| <a name="input_target_group_stickiness"></a> [target\_group\_stickiness](#input\_target\_group\_stickiness) | Stickiness settings for the target group | `any` | <pre>{<br>  "cookie_duration": 3600,<br>  "enabled": true,<br>  "type": "lb_cookie"<br>}</pre> | no |
+| <a name="input_target_group_stickiness"></a> [target\_group\_stickiness](#input\_target\_group\_stickiness) | Stickiness settings for the target group | `any` | <pre>{<br>  "cookie_duration": 3600,<br>  "enabled": false,<br>  "type": "lb_cookie"<br>}</pre> | no |
 | <a name="input_task_definition_memory_cpu_configuration"></a> [task\_definition\_memory\_cpu\_configuration](#input\_task\_definition\_memory\_cpu\_configuration) | Task definition memory and cpu configuration | <pre>object({<br>    cpu    = number,<br>    memory = number<br>  })</pre> | <pre>{<br>  "cpu": 1024,<br>  "memory": 2048<br>}</pre> | no |
+| <a name="input_termination_wait_time_in_minutes"></a> [termination\_wait\_time\_in\_minutes](#input\_termination\_wait\_time\_in\_minutes) | The time to wait (in minutes) before force killing a container | `number` | `5` | no |
 | <a name="input_volume"></a> [volume](#input\_volume) | Volume to attach to the task (Fargate only supports EFS) | <pre>object({<br>    efs_volume_configuration = object({<br>      authorization_config = object({<br>        access_point_id = string,<br>      iam = string }),<br>      file_system_id     = string,<br>      root_directory     = string,<br>      transit_encryption = string,<br>    transit_encryption_port = number }),<br>    name = string<br>  })</pre> | <pre>{<br>  "efs_volume_configuration": {<br>    "authorization_config": {<br>      "access_point_id": "null",<br>      "iam": "DISABLED"<br>    },<br>    "file_system_id": "null",<br>    "root_directory": "/",<br>    "transit_encryption": "ENABLED",<br>    "transit_encryption_port": 2999<br>  },<br>  "name": "disabled"<br>}</pre> | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC to deploy to | `string` | n/a | yes |
 
