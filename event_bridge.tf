@@ -13,7 +13,7 @@ locals {
   })
 
   ecs_service_name = var.enable_pipeline ? aws_ecs_service.pipeline_enabled[0].name : aws_ecs_service.pipeline_disabled[0].name
-  ecs_service_id = var.enable_pipeline ? aws_ecs_service.pipeline_enabled[0].id : aws_ecs_service.pipeline_disabled[0].id
+  ecs_service_id   = var.enable_pipeline ? aws_ecs_service.pipeline_enabled[0].id : aws_ecs_service.pipeline_disabled[0].id
 }
 
 resource "aws_cloudwatch_event_rule" "ecr" {
@@ -62,50 +62,50 @@ resource "aws_scheduler_schedule_group" "ecs_service" {
 resource "aws_scheduler_schedule" "ecs_service_start" {
   count = var.enable_service_schedule ? 1 : 0
 
-  name = "${var.application_name}-ecs-service-scheduled-start"
+  name        = "${var.application_name}-ecs-service-scheduled-start"
   description = "Start the ${var.application_name} ecs service on a schedule"
-  group_name = "${var.application_name}-ecs-service"
+  group_name  = "${var.application_name}-ecs-service"
 
   flexible_time_window {
     mode = "OFF"
   }
 
-  schedule_expression = var.service_schedule_configuration.start_cron
+  schedule_expression          = var.service_schedule_configuration.start_cron
   schedule_expression_timezone = var.service_schedule_configuration.timezone
 
   target {
-    arn = "arn:aws:scheduler:::aws-sdk:ecs:updateService"
+    arn      = "arn:aws:scheduler:::aws-sdk:ecs:updateService"
     role_arn = aws_iam_role.event_bridge_scheduler[0].arn
 
     input = jsonencode({
-      Service: local.ecs_service_name,
-      DesiredCount: var.desired_count,
-      Cluster: var.cluster_name
+      Service : local.ecs_service_name,
+      DesiredCount : var.desired_count,
+      Cluster : var.cluster_name
     })
   }
 }
 resource "aws_scheduler_schedule" "ecs_service_stop" {
   count = var.enable_service_schedule ? 1 : 0
 
-  name = "${var.application_name}-ecs-service-scheduled-stop"
+  name        = "${var.application_name}-ecs-service-scheduled-stop"
   description = "Stop the ${var.application_name} ecs service on a schedule"
-  group_name = "${var.application_name}-ecs-service"
+  group_name  = "${var.application_name}-ecs-service"
 
   flexible_time_window {
     mode = "OFF"
   }
 
-  schedule_expression = var.service_schedule_configuration.stop_cron
+  schedule_expression          = var.service_schedule_configuration.stop_cron
   schedule_expression_timezone = var.service_schedule_configuration.timezone
 
   target {
-    arn = "arn:aws:scheduler:::aws-sdk:ecs:updateService"
+    arn      = "arn:aws:scheduler:::aws-sdk:ecs:updateService"
     role_arn = aws_iam_role.event_bridge_scheduler[0].arn
 
     input = jsonencode({
-      Service: local.ecs_service_name,
-      DesiredCount: 0,
-      Cluster: var.cluster_name
+      Service : local.ecs_service_name,
+      DesiredCount : 0,
+      Cluster : var.cluster_name
     })
   }
 }

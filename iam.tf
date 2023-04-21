@@ -365,13 +365,13 @@ resource "aws_iam_role" "event_bridge_scheduler" {
   })
 }
 resource "aws_iam_policy_attachment" "event_bridge_scheduler" {
-  count = var.enable_service_schedule ? 1 : 0
+  count      = var.enable_service_schedule ? 1 : 0
   name       = lower("${var.application_name}-event-bridge-scheduler-policy-attachment")
   roles      = [aws_iam_role.event_bridge_scheduler[0].name]
   policy_arn = aws_iam_policy.event_bridge_scheduler[0].arn
 }
 resource "aws_iam_policy" "event_bridge_scheduler" {
-  count = var.enable_service_schedule ? 1 : 0
+  count       = var.enable_service_schedule ? 1 : 0
   name        = lower("${var.application_name}-event-bridge-scheduler-policy")
   description = "Policy for ${var.application_name} Event Bridge Scheduler role"
   policy = jsonencode({
