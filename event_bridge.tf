@@ -11,6 +11,9 @@ locals {
     application_name = var.application_name,
     cluster_arn      = data.aws_ecs_cluster.this.arn
   })
+
+  ecs_service_name = var.enable_pipeline ? aws_ecs_service.pipeline_enabled[0].name : aws_ecs_service.pipeline_disabled[0].name
+  ecs_service_id = var.enable_pipeline ? aws_ecs_service.pipeline_enabled[0].id : aws_ecs_service.pipeline_disabled[0].id
 }
 
 resource "aws_cloudwatch_event_rule" "ecr" {
