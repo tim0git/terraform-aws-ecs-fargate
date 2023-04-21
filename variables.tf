@@ -298,7 +298,7 @@ variable "app_config_environmental_variables" {
 variable "enable_service_schedule" {
   type = bool
   description = "Enable ECS Service Schedule, this will start and stop the ecs service on a cron expression see service_schedule_configuration input variable"
-  default = true
+  default = false
 }
 variable "service_schedule_configuration" {
   type = object({
