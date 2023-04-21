@@ -13,7 +13,6 @@ variable "container_definition" {
   description = "Container definitions for the application"
 }
 
-
 ##Lookup Variables
 variable "cluster_name" {
   type        = string
