@@ -143,7 +143,7 @@ module "service_complete" {
     }
   }
 
-  enable_app_config = true
+  enable_app_config    = true
   app_config_image_uri = "12345678910.dkr.ecr.us-east-1.amazonaws.com/example-app-config-image:latest"
   app_config_environmental_variables = [
     {
@@ -152,6 +152,12 @@ module "service_complete" {
     }
   ]
 
+  enable_service_schedule = true
+  service_schedule_configuration = {
+    start_cron = "cron(0 7 ? * 2-6 *)"
+    stop_cron  = "cron(0 19 ? * 2-6 *)"
+    timezone   = "Europe/London"
+  }
 
   tags = {
     Name = "example"
