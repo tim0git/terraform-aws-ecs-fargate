@@ -296,6 +296,24 @@ variable "app_config_environmental_variables" {
   description = "Environmental variables for the app config container see https://docs.aws.amazon.com/appconfig/latest/userguide/appconfig-integrations-ecs.html"
   default     = []
 }
+variable "enable_service_schedule" {
+  type = bool
+  description = "Enable ECS Service Schedule, this will start and stop the ecs service on a cron expression see service_schedule_configuration input variable"
+  default = true
+}
+variable "service_schedule_configuration" {
+  type = object({
+    start_cron : string,
+    stop_cron: string,
+    timezone: string
+  })
+  description = "The start and stop cron expressions that control the service schedule, applicable only if enable_service_schedule is true. See https://docs.aws.amazon.com/scheduler/latest/UserGuide/schedule-types.html"
+  default = {
+    start_cron : "cron(0 7 ? * 2-6 *)"
+    stop_cron : "cron(0 19 ? * 2-6 *)"
+    timezone: "Europe/London"
+  }
+}
 variable "tags" {
   type        = map(string)
   description = "Default tags to apply to all resources"
