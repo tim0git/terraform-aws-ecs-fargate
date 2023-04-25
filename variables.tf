@@ -266,7 +266,7 @@ variable "side_car_resource_allocation_configuration" {
       memory = 0.0625
     }
     xray_daemon = {
-      cpu    = 0.625
+      cpu    = 0.0625
       memory = 0.125
     }
   }
