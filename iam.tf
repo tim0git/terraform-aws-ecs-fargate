@@ -113,7 +113,6 @@ resource "aws_iam_role_policy_attachment" "task_custom" {
   role       = aws_iam_role.task.name
   policy_arn = var.ecs_task_custom_policy_arns[count.index]
 }
-
 resource "aws_iam_role" "code_deploy" {
   count = var.enable_pipeline ? 1 : 0
   name  = lower("${var.application_name}-code-deploy-role")
@@ -136,6 +135,12 @@ resource "aws_iam_role_policy_attachment" "code_deploy" {
   count      = var.enable_pipeline ? 1 : 0
   role       = aws_iam_role.code_deploy[0].name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
+}
+resource "aws_iam_policy_attachment" "xray_write_access_managed" {
+  count      = var.enable_xray ? 1 : 0
+  name       = lower("${var.application_name}-ecs-task-policy-attachment")
+  roles      = [aws_iam_role.task.name]
+  policy_arn = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
 }
 
 resource "aws_iam_role" "code_pipeline" {
