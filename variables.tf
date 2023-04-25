@@ -322,6 +322,11 @@ variable "enable_xray" {
   description = "Enable X-Ray tracing for the task definition"
   default     = false
 }
+variable "xray_daemon_image_uri" {
+  type        = string
+  description = "Image URI for the X-Ray daemon container"
+  default     = "public.ecr.aws/xray/aws-xray-daemon:latest"
+}
 variable "tags" {
   type        = map(string)
   description = "Default tags to apply to all resources"
