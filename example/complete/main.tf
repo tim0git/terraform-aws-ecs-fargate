@@ -159,6 +159,8 @@ module "service_complete" {
     timezone   = "Europe/London"
   }
 
+  enable_xray = true
+
   tags = {
     Name = "example"
   }
