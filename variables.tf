@@ -313,6 +313,11 @@ variable "service_schedule_configuration" {
     timezone : "Europe/London"
   }
 }
+variable "enable_xray" {
+  type        = bool
+  description = "Enable X-Ray tracing for the task definition"
+  default     = false
+}
 variable "tags" {
   type        = map(string)
   description = "Default tags to apply to all resources"
