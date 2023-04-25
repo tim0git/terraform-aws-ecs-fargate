@@ -22,12 +22,14 @@ locals {
   depends_on_firelens                      = [{ containerName : "${var.application_name}-firelens-log-agent", condition : "START" }]
   depends_on_newrelic_infrastructure_agent = local.use_new_relic_firelens_image ? [{ containerName : "${var.application_name}-newrelic-infra-agent", condition : "START" }] : []
   depends_on_app_config_agent              = var.enable_app_config ? [{ containerName : "${var.application_name}-app-config-agent", condition : "START" }] : []
+  depends_on_xray_daemon = var.enable_xray ? [{ containerName : "${var.application_name}-xray-daemon", condition : "START" }] : []
 
   side_cars = concat(
     local.firelense_container_definition,
     local.reverse_proxy_container_definition,
     local.new_relic_ecs_infrastructure_monitor_container_definition,
-    local.app_config_agent_container_definition
+    local.app_config_agent_container_definition,
+    local.xray_daemon_container_definition
   )
 }
 
@@ -129,7 +131,8 @@ locals {
       local.depends_on_reverse_proxy,
       local.depends_on_firelens,
       local.depends_on_newrelic_infrastructure_agent,
-      local.depends_on_app_config_agent
+      local.depends_on_app_config_agent,
+      local.depends_on_xray_daemon
     )
   }]
 
@@ -200,6 +203,42 @@ locals {
       name  = "ROLE_ARN",
       value = aws_iam_role.app_config_agent[0].arn
     }])
+    mountPoints = [],
+    volumesFrom = [],
+  }] : []
+
+  xray_daemon_container_definition = var.enable_xray ? [{
+    name : "${var.application_name}-xray-daemon",
+    image  = var.xray_daemon_image_uri,
+    cpu    = local.xray_daemon_cpu_allocation,
+    memory = local.xray_daemon_memory_allocation,
+    essential : true,
+    portMappings : [
+      {
+        "containerPort": 2000,
+        "protocol": "udp"
+      }
+    ]
+    logConfiguration : {
+      "logDriver" : "awslogs",
+      "options" : {
+        "awslogs-group" : "ecs/${var.application_name}",
+        "awslogs-region" : data.aws_region.current.name,
+        "awslogs-create-group" : "true",
+        "awslogs-stream-prefix" : "xray-daemon"
+      }
+    }
+    healthCheck = {
+      "command" : [
+        "CMD-SHELL",
+        "netstat -aun | grep 2000 > /dev/null; if [ 0 != $? ]; then exit 1; fi;"
+      ],
+      "interval" : 30,
+      "retries" : 5,
+      "startPeriod" : 30,
+      "timeout" : 5
+    },
+    environment = [],
     mountPoints = [],
     volumesFrom = [],
   }] : []
