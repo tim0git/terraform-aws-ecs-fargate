@@ -265,6 +265,10 @@ variable "side_car_resource_allocation_configuration" {
       cpu    = 0.125
       memory = 0.0625
     }
+    xray_daemon = {
+      cpu    = 0.625
+      memory = 0.125
+    }
   }
 }
 variable "readonly_root_file_system" {
