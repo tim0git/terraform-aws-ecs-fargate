@@ -228,16 +228,6 @@ locals {
         "awslogs-stream-prefix" : "xray-daemon"
       }
     }
-    healthCheck = {
-      "command" : [
-        "CMD-SHELL",
-        "netstat -aun | grep 2000 > /dev/null; if [ 0 != $? ]; then exit 1; fi;"
-      ],
-      "interval" : 30,
-      "retries" : 5,
-      "startPeriod" : 30,
-      "timeout" : 5
-    },
     environment = [],
     mountPoints = [],
     volumesFrom = [],
