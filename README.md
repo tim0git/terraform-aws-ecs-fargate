@@ -30,6 +30,9 @@ KNOWN ISSUES:
 #### ECS MFE Deployment with App Config Agent
 ![fargate high level infra diagram](./resources/diagrams/ecs-service-app-config.svg)
 
+#### ECS Complete Example
+![fargate high level infra diagram](./resources/diagrams/ecs-service-complete.svg)
+
 #### Fargate CPU and Memory Configuration Table
 
 | Memory value (MiB)                                                                                   | CPU value      | Operating systems supported for Fargate |
