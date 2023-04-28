@@ -136,10 +136,9 @@ resource "aws_iam_role_policy_attachment" "code_deploy" {
   role       = aws_iam_role.code_deploy[0].name
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
 }
-resource "aws_iam_policy_attachment" "xray_write_access_managed" {
+resource "aws_iam_role_policy_attachment" "xray_write_access_managed" {
   count      = var.enable_xray ? 1 : 0
-  name       = lower("${var.application_name}-ecs-task-policy-attachment")
-  roles      = [aws_iam_role.task.name]
+  role       = aws_iam_role.task.name
   policy_arn = "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess"
 }
 
