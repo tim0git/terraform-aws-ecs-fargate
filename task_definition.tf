@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "this" {
   }
 
   dynamic "volume" {
-    for_each = try(var.volumes[0].name != "disabled", false) ? var.volumes : []
+    for_each = var.volumes
     content {
       name = volume.value.name
       efs_volume_configuration {

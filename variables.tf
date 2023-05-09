@@ -171,19 +171,7 @@ variable "volumes" {
     })
   )
   description = "EFS Volumes to attach to the task"
-  default = [{
-    name = "disabled"
-    efs_volume_configuration = {
-      file_system_id          = "null"
-      root_directory          = "/"
-      transit_encryption      = "ENABLED"
-      transit_encryption_port = 2999
-      authorization_config = {
-        access_point_id = "null"
-        iam             = "DISABLED"
-      }
-    }
-  }]
+  default = []
 }
 variable "custom_aws_profile" {
   type        = string
