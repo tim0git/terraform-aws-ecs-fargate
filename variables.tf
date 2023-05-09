@@ -156,20 +156,22 @@ variable "sns_topic_subscription_email" {
   description = "Email to subscribe to the pipeline notifications"
   default     = null
 }
-variable "volume" {
-  type = object({
-    efs_volume_configuration = object({
-      authorization_config = object({
-        access_point_id = string,
-      iam = string }),
-      file_system_id     = string,
-      root_directory     = string,
-      transit_encryption = string,
-    transit_encryption_port = number }),
-    name = string
-  })
-  description = "Volume to attach to the task (Fargate only supports EFS)"
-  default = {
+variable "volumes" {
+  type = list(
+    object({
+      efs_volume_configuration = object({
+        authorization_config = object({
+          access_point_id = string,
+        iam = string }),
+        file_system_id     = string,
+        root_directory     = string,
+        transit_encryption = string,
+      transit_encryption_port = number }),
+      name = string
+    })
+  )
+  description = "EFS Volumes to attach to the task"
+  default = [{
     name = "disabled"
     efs_volume_configuration = {
       file_system_id          = "null"
@@ -181,7 +183,7 @@ variable "volume" {
         iam             = "DISABLED"
       }
     }
-  }
+  }]
 }
 variable "custom_aws_profile" {
   type        = string

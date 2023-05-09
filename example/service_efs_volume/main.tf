@@ -34,7 +34,7 @@ module "service_efs_volume" {
   security_groups_names = ["example-ecs-service"]
   vpc_name              = "example-vpc"
 
-  volume = {
+  volumes = [{
     name = "myEfsVolume"
     efs_volume_configuration = {
       file_system_id          = "fs-1234"
@@ -46,7 +46,7 @@ module "service_efs_volume" {
         iam             = "ENABLED"
       }
     }
-  }
+  }]
 
   tags = {
     Name = "example"
