@@ -10,6 +10,6 @@ locals {
   firelense_log_agent_memory_allocation            = floor(var.task_definition_memory_cpu_configuration.memory * try(var.side_car_resource_allocation_configuration.firelense_log_agent.memory, 0.0625))
   new_relic_infrastructure_agent_memory_allocation = floor(var.task_definition_memory_cpu_configuration.memory * try(var.side_car_resource_allocation_configuration.new_relic_infrastructure_agent.memory, 0.125))
   app_config_agent_memory_allocation               = floor(var.task_definition_memory_cpu_configuration.memory * try(var.side_car_resource_allocation_configuration.app_config_agent.memory, 0.0625))
-  xray_daemon_memory_allocation                  = floor(var.task_definition_memory_cpu_configuration.memory * try(var.side_car_resource_allocation_configuration.xray_daemon.memory, 0.125))
+  xray_daemon_memory_allocation                    = floor(var.task_definition_memory_cpu_configuration.memory * try(var.side_car_resource_allocation_configuration.xray_daemon.memory, 0.125))
   calculated_application_memory_allocation         = floor(var.task_definition_memory_cpu_configuration.memory - sum([for side_car in local.side_cars : side_car.memory]))
 }

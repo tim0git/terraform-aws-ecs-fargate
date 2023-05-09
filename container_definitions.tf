@@ -22,7 +22,7 @@ locals {
   depends_on_firelens                      = [{ containerName : "${var.application_name}-firelens-log-agent", condition : "START" }]
   depends_on_newrelic_infrastructure_agent = local.use_new_relic_firelens_image ? [{ containerName : "${var.application_name}-newrelic-infra-agent", condition : "START" }] : []
   depends_on_app_config_agent              = var.enable_app_config ? [{ containerName : "${var.application_name}-app-config-agent", condition : "START" }] : []
-  depends_on_xray_daemon = var.enable_xray ? [{ containerName : "${var.application_name}-xray-daemon", condition : "START" }] : []
+  depends_on_xray_daemon                   = var.enable_xray ? [{ containerName : "${var.application_name}-xray-daemon", condition : "START" }] : []
 
   side_cars = concat(
     local.firelense_container_definition,
@@ -215,8 +215,8 @@ locals {
     essential : true,
     portMappings : [
       {
-        "containerPort": 2000,
-        "protocol": "udp"
+        "containerPort" : 2000,
+        "protocol" : "udp"
       }
     ]
     logConfiguration : {
