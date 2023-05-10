@@ -113,7 +113,7 @@ locals {
     memory                 = try(var.container_definition.memory, local.calculated_application_memory_allocation)
     essential              = true
     portMappings           = var.container_definition.portMappings
-    environment            = var.container_definition.environment
+    environment            = try(var.container_definition.environment, [])
     secrets                = try(var.container_definition.secrets, null)
     volumesFrom            = try(var.container_definition.volumesFrom, [])
     readonlyRootFilesystem = try(var.container_definition.readonlyRootFilesystem, var.readonly_root_file_system)
