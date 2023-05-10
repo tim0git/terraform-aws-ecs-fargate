@@ -171,7 +171,7 @@ variable "volumes" {
     })
   )
   description = "EFS Volumes to attach to the task"
-  default = []
+  default     = []
 }
 variable "custom_aws_profile" {
   type        = string
