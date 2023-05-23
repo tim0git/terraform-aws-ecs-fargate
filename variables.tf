@@ -72,7 +72,10 @@ variable "load_balancer_listener_port" {
   default     = 443
 }
 variable "listener_rule_conditions" {
-  type        = object({ host_header = list(string), path_pattern = list(string) })
+  type        = object({ 
+              path_pattern = list(string) 
+              host_header = optional(list(string),[]), 
+              })
   description = "List of conditions to use for the listener rule"
   default = {
     path_pattern = ["/*"]
