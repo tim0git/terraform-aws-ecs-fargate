@@ -74,6 +74,9 @@ EOT
 
   triggers = {
     aws_ecs_task_definition_revision = aws_ecs_task_definition.this.revision
+    enable_appspec_hooks = var.enable_appspec_hooks
+    lifecycle_event_name = var.lifecycle_event_name
+    hooks_lambda_function_arn = var.hooks_lambda_function_arn
   }
 
   depends_on = [
