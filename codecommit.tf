@@ -1,6 +1,7 @@
 locals {
   container_name = local.use_reverse_proxy_side_car ? "${var.application_name}-reverse-proxy" : var.application_name
   container_port = local.use_reverse_proxy_side_car ? var.reverse_proxy_configuration.listener_port : var.container_definition.portMappings[0].containerPort
+
 }
 
 resource "aws_codecommit_repository" "this" {
@@ -16,7 +17,7 @@ resource "null_resource" "code-commit-files" {
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
 
-if ["${var.custom_aws_profile}" != "default"] ; then
+if [ "${var.custom_aws_profile}" != "default" ] ; then
   export "AWS_PROFILE=${var.custom_aws_profile}"
 fi
 
@@ -29,6 +30,11 @@ sed -i'.bak' 's@${var.container_definition.image}@<IMAGE1_NAME>@' taskdef.json
 echo "Create AppSpec File"
 sed -i'.bak' 's@<CONTAINER_NAME>@${local.container_name}@' 'resources/appspec.yaml'
 sed -i'.bak' 's@<CONTAINER_PORT>@${local.container_port}@' 'resources/appspec.yaml'
+
+if [ ${var.enable_appspec_hooks} ] ; then
+  echo "Hooks:" >> resources/appspec.yaml
+  echo "  - ${var.lifecycle_event_name}: \"${var.hooks_lambda_function_arn}\"" >> resources/appspec.yaml
+fi
 
 maincommitid=`aws codecommit get-branch --repository-name "${var.application_name}" --branch-name main --query '[branch][*].commitId' --output text `
 
@@ -68,6 +74,9 @@ EOT
 
   triggers = {
     aws_ecs_task_definition_revision = aws_ecs_task_definition.this.revision
+    enable_appspec_hooks = var.enable_appspec_hooks
+    lifecycle_event_name = var.lifecycle_event_name
+    hooks_lambda_function_arn = var.hooks_lambda_function_arn
   }
 
   depends_on = [

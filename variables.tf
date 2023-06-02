@@ -324,3 +324,21 @@ variable "tags" {
   type        = map(string)
   description = "Default tags to apply to all resources"
 }
+
+variable "enable_appspec_hooks" {
+  type        = bool
+  default     = false
+  description = "whether you want to enable lifecycle hooks in codepipeline i.e. to trigger lambda after a lifecycle event - https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file-structure-hooks.html"
+}
+
+variable lifecycle_event_name {
+  type        = string
+  default     = null
+  description = "lifecycle event name from - BeforeInstall, AfterInstall, AfterAllowTestTraffic, BeforeAllowTraffic, AfterAllowTraffic"
+}
+
+variable hooks_lambda_function_arn {
+  type        = string
+  default     = null
+  description = "lambda function arn that you want to trigger after lifecycle event"
+}
