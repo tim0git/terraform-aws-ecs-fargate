@@ -33,7 +33,7 @@ sed -i'.bak' 's@<CONTAINER_PORT>@${local.container_port}@' 'resources/appspec.ya
 
 if [ ${var.enable_appspec_hooks} ] ; then
   echo "Hooks:" >> resources/appspec.yaml
-  echo "  - ${var.lifecycle_event_name}: \"${var.hooks_lambda_function_arn}\"" >> resources/appspec.yaml
+  echo "  - ${tostring(var.lifecycle_event_name)}: \"${tostring(var.hooks_lambda_function_arn)}\"" >> resources/appspec.yaml
 fi
 
 maincommitid=`aws codecommit get-branch --repository-name "${var.application_name}" --branch-name main --query '[branch][*].commitId' --output text `
