@@ -20,7 +20,7 @@ locals {
   use_new_relic_firelens_image             = try(var.container_definition.logConfiguration.options["Name"] == "newrelic", false)
   use_reverse_proxy_side_car               = var.reverse_proxy_configuration.image_uri != null
   depends_on_reverse_proxy                 = local.use_reverse_proxy_side_car ? [{ containerName : "${var.application_name}-reverse-proxy", condition : "START" }] : []
-  depends_on_firelens                      = [{ containerName : "${var.application_name}-firelens-log-agent", condition : "START" }]
+  depends_on_firelens                      = local.use_ecs_awslog_driver ? [{ containerName : "${var.application_name}-firelens-log-agent", condition : "START" }] : []
   depends_on_newrelic_infrastructure_agent = local.use_new_relic_firelens_image ? [{ containerName : "${var.application_name}-newrelic-infra-agent", condition : "START" }] : []
   depends_on_app_config_agent              = var.enable_app_config ? [{ containerName : "${var.application_name}-app-config-agent", condition : "START" }] : []
   depends_on_xray_daemon                   = var.enable_xray ? [{ containerName : "${var.application_name}-xray-daemon", condition : "START" }] : []
