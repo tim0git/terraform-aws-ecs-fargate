@@ -16,6 +16,7 @@ locals {
     "auto_create_group" : "true",
     "log_stream_prefix" : var.application_name
   }
+  use_ecs_awslog_driver                    = try(var.container_definition.logConfiguration.logDriver != "awslogs", true)
   use_new_relic_firelens_image             = try(var.container_definition.logConfiguration.options["Name"] == "newrelic", false)
   use_reverse_proxy_side_car               = var.reverse_proxy_configuration.image_uri != null
   depends_on_reverse_proxy                 = local.use_reverse_proxy_side_car ? [{ containerName : "${var.application_name}-reverse-proxy", condition : "START" }] : []
@@ -70,7 +71,7 @@ locals {
     volumesFrom = [],
   }] : []
 
-  firelense_container_definition = [{
+  firelense_container_definition = local.use_ecs_awslog_driver ? [{
     name : "${var.application_name}-firelens-log-agent",
     image  = local.use_new_relic_firelens_image ? var.new_relic_firelens_image_uri[data.aws_region.current.name] : var.aws_firelens_image_uri,
     cpu    = local.firelense_log_agent_cpu_allocation,
@@ -104,7 +105,7 @@ locals {
       "startPeriod" : 10,
       "timeout" : 5
     },
-  }]
+  }] : []
 
   application_container_definition = [{
     name                   = var.application_name
