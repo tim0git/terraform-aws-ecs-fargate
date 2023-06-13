@@ -8,10 +8,10 @@ resource "aws_ecs_task_definition" "this" {
   task_role_arn            = aws_iam_role.task.arn
 
   container_definitions = jsonencode(
-    concat(
+    flatten(concat(
       local.application_container_definition,
       local.side_cars
-    )
+    ))
   )
 
   runtime_platform {

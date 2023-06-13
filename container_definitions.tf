@@ -16,10 +16,11 @@ locals {
     "auto_create_group" : "true",
     "log_stream_prefix" : var.application_name
   }
+  use_ecs_awslog_driver                    = try(var.container_definition.logConfiguration.logDriver != "awslogs", true)
   use_new_relic_firelens_image             = try(var.container_definition.logConfiguration.options["Name"] == "newrelic", false)
   use_reverse_proxy_side_car               = var.reverse_proxy_configuration.image_uri != null
   depends_on_reverse_proxy                 = local.use_reverse_proxy_side_car ? [{ containerName : "${var.application_name}-reverse-proxy", condition : "START" }] : []
-  depends_on_firelens                      = [{ containerName : "${var.application_name}-firelens-log-agent", condition : "START" }]
+  depends_on_firelens                      = local.use_ecs_awslog_driver ? [{ containerName : "${var.application_name}-firelens-log-agent", condition : "START" }] : []
   depends_on_newrelic_infrastructure_agent = local.use_new_relic_firelens_image ? [{ containerName : "${var.application_name}-newrelic-infra-agent", condition : "START" }] : []
   depends_on_app_config_agent              = var.enable_app_config ? [{ containerName : "${var.application_name}-app-config-agent", condition : "START" }] : []
   depends_on_xray_daemon                   = var.enable_xray ? [{ containerName : "${var.application_name}-xray-daemon", condition : "START" }] : []
@@ -70,7 +71,7 @@ locals {
     volumesFrom = [],
   }] : []
 
-  firelense_container_definition = [{
+  firelense_container_definition = local.use_ecs_awslog_driver ? [{
     name : "${var.application_name}-firelens-log-agent",
     image  = local.use_new_relic_firelens_image ? var.new_relic_firelens_image_uri[data.aws_region.current.name] : var.aws_firelens_image_uri,
     cpu    = local.firelense_log_agent_cpu_allocation,
@@ -104,7 +105,7 @@ locals {
       "startPeriod" : 10,
       "timeout" : 5
     },
-  }]
+  }] : []
 
   application_container_definition = [{
     name                   = var.application_name
@@ -127,13 +128,13 @@ locals {
       "options" : try(var.container_definition.logConfiguration.options, local.default_firelense_log_configuration_options)
       "secretOptions" : try(var.container_definition.logConfiguration.secretOptions, [])
     },
-    dependsOn = concat(
+    dependsOn = flatten(concat(
       local.depends_on_reverse_proxy,
       local.depends_on_firelens,
       local.depends_on_newrelic_infrastructure_agent,
       local.depends_on_app_config_agent,
       local.depends_on_xray_daemon
-    )
+    ))
   }]
 
   new_relic_ecs_infrastructure_monitor_container_definition = local.use_new_relic_firelens_image ? [{
