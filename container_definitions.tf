@@ -128,13 +128,13 @@ locals {
       "options" : try(var.container_definition.logConfiguration.options, local.default_firelense_log_configuration_options)
       "secretOptions" : try(var.container_definition.logConfiguration.secretOptions, [])
     },
-    dependsOn = concat(
+    dependsOn = flatten(concat(
       local.depends_on_reverse_proxy,
       local.depends_on_firelens,
       local.depends_on_newrelic_infrastructure_agent,
       local.depends_on_app_config_agent,
       local.depends_on_xray_daemon
-    )
+    ))
   }]
 
   new_relic_ecs_infrastructure_monitor_container_definition = local.use_new_relic_firelens_image ? [{
