@@ -30,11 +30,7 @@ locals {
     local.reverse_proxy_container_definition,
     local.new_relic_ecs_infrastructure_monitor_container_definition,
     local.app_config_agent_container_definition,
-    local.xray_daemon_container_definition,
-    [{
-      cpu    = 0 ## used for edge case where all are empty
-      memory = 0
-    }]
+    local.xray_daemon_container_definition
   )
 }
 
