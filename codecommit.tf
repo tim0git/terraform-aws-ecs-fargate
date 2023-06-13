@@ -31,11 +31,6 @@ echo "Create AppSpec File"
 sed -i'.bak' 's@<CONTAINER_NAME>@${local.container_name}@' 'resources/appspec.yaml'
 sed -i'.bak' 's@<CONTAINER_PORT>@${local.container_port}@' 'resources/appspec.yaml'
 
-if [ ${var.enable_appspec_hooks} ] ; then
-  echo "Hooks:" >> resources/appspec.yaml
-  echo "  - ${tostring(var.lifecycle_event_name)}: \"${tostring(var.hooks_lambda_function_arn)}\"" >> resources/appspec.yaml
-fi
-
 maincommitid=`aws codecommit get-branch --repository-name "${var.application_name}" --branch-name main --query '[branch][*].commitId' --output text `
 
 if [[ -z "$maincommitid" ]]; then
