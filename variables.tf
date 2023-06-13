@@ -333,12 +333,21 @@ variable "enable_appspec_hooks" {
 
 variable lifecycle_event_name {
   type        = string
-  default     = null
+  default     = "null"
   description = "lifecycle event name from - BeforeInstall, AfterInstall, AfterAllowTestTraffic, BeforeAllowTraffic, AfterAllowTraffic"
 }
 
 variable hooks_lambda_function_arn {
   type        = string
-  default     = null
+  default     = "null"
   description = "lambda function arn that you want to trigger after lifecycle event"
+}
+
+variable "appspec_hook" {
+  type = object({
+    lifecycle_event_name = optional(string, "null")
+    hooks_lambda_function_arn = optional(string, "null")
+  })
+  default = {}
+  description = "(Optional) enable lifecycle hook in codepipeline i.e. to trigger lambda after a lifecycle event"
 }
