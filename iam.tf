@@ -1,7 +1,7 @@
 locals {
 
   s3_environment_files         = toset([for file in var.container_definition.environmentFiles : file.value])
-  s3_buckets_environment_files = toset([for arn in local.s3_environment_files : regex("(arn:aws:s3:::[^/]+)", arn)])
+  s3_buckets_environment_files = flatten(toset([for arn in local.s3_environment_files : regex("(arn:aws:s3:::[^/]+)", arn)]))
 }
 
 
