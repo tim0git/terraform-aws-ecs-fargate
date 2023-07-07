@@ -1,3 +1,10 @@
+locals {
+
+  s3_environment_files         = toset([for file in var.container_definition.environmentFiles : file.value])
+  s3_buckets_environment_files = toset([for arn in local.s3_environment_files : regex("(arn:aws:s3:::[^/]+)", arn)])
+}
+
+
 resource "aws_iam_role" "execution" {
   name = lower("${var.application_name}-ecs-execution-role")
 
@@ -62,6 +69,38 @@ resource "aws_iam_policy" "execution" {
         ]
         Effect   = "Allow"
         Resource = "arn:aws:ssm:*:*:parameter/*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_policy_attachment" "s3_env" {
+  count = length(local.s3_environment_files) > 0 ? 1 : 0
+  name       = lower("${var.application_name}-ecs-execution-s3-env-policy-attachment")
+  roles      = [aws_iam_role.execution.name]
+  policy_arn = aws_iam_policy.s3_env[0].arn
+}
+
+resource "aws_iam_policy" "s3_env" {
+  count = length(local.s3_environment_files) > 0 ? 1 : 0
+  name        = lower("${var.application_name}-ecs-execution-s3-env-policy")
+  description = "Policy for ${var.application_name} access to s3 environment files in ECS execution role"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "s3:GetObject"
+        ]
+        Effect   = "Allow"
+        Resource = try(local.s3_environment_files, [])
+      },
+      {
+        Action = [
+          "s3:GetBucketLocation"
+        ]
+        Effect   = "Allow"
+        Resource = try(local.s3_buckets_environment_files, [])
       },
     ]
   })
