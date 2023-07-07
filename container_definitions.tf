@@ -115,6 +115,7 @@ locals {
     essential              = true
     portMappings           = var.container_definition.portMappings
     environment            = try(var.container_definition.environment, [])
+    environmentFiles       = try(var.container_definition.environmentFiles, [])
     secrets                = try(var.container_definition.secrets, null)
     volumesFrom            = try(var.container_definition.volumesFrom, [])
     readonlyRootFilesystem = try(var.container_definition.readonlyRootFilesystem, var.readonly_root_file_system)
